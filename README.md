@@ -112,6 +112,8 @@ page in the browser.
 
 ![computer server](https://curriculum-content.s3.amazonaws.com/how-the-web-works/Image_17_ComputerServer.png)
 
+***
+
 ## Requests
 
 ### URL
@@ -122,14 +124,14 @@ these addresses referred to as URIs (Uniform Resource Identifiers). Both are
 fine. Let's look at the URL we used up top:
 
 ```txt
-https://github.com/learn-co-curriculum/phase-3-how-the-web-works-readme
+https://github.com/learn-co-curriculum/python-p4-how-the-web-works
 ```
 
 This URL is broken into three parts:
 
-- `https` - the protocol
-- `github.com` - the domain name
-- `/learn-co-curriculum/phase-3-how-the-web-works-readme` - the path
+- `https` - the protocol.
+- `github.com` - the domain name.
+- `/learn-co-curriculum/python-p4-how-the-web-works` - the path.
 
 The **protocol** is the format we're using to send our request. There are
 several different types of internet protocols (SMTP for emails, HTTPS for secure
@@ -142,7 +144,7 @@ of the web server that hosts that particular website. This will be things like
 The **path** is the particular part of the website we want to load. GitHub has
 millions and millions of users and repositories, so we need to identify the
 specific resource we want using the path:
-`/learn-co-curriculum/phase-3-how-the-web-works-readme`.
+`/learn-co-curriculum/python-p4-how-the-web-works`.
 
 For an analogy for how a URL works, think about an apartment building. The
 **domain** is the entire building. Within that building, though, there are
@@ -156,71 +158,124 @@ Facebook to execute the same search, it looks like this:
 
 You can learn more about the [anatomy of a URL from MDN][url anatomy].
 
-## The History of Flask
+### HTTP Verbs
 
-Flask was originally developed by [Armin Ronacher][armron] as an April Fool's
-joke in 2010. His goal was to make the smallest viable web framework and pitch
-it for use in production code. He leveraged some of his other projects in the
-process: [Werkzeug][werk] (German for "work stuff") as an interface between the
-application and server, [Jinja][jinja] to turn Python code into HTML, and now
-[Click][click], a CLI building tool that we mentioned at the end of Phase 3.
+When making a web request, in addition to the path, you also need to specify the
+action you would like the server to perform. We do this using
+[**HTTP Verbs**][verbs], also referred to as **request methods**. We can use the
+same path for multiple actions, so it is the **combination** of the path and the
+HTTP verb (method) that _fully_ describes the request. For example, making a
+**POST** request to `/learn-co-curriculum/python-p4-how-the-web-works`
+tells the server something different from making a **GET** request to
+`/learn-co-curriculum/python-p4-how-the-web-works`.
 
-Competing with the well-established and generally beloved Django, he felt that
-his proposal would be met with a laugh. After all, Flask didn't do very much.
-All of the source code fit comfortably into one file! Much to Ronacher's
-surprise, people loved Flask and began submitting hundreds of pull requests on
-the repo, suggesting changes to expand its core functionality and compatibility
-with different styles of coding.
+**GET** requests are the most common browser requests. This just means "hey
+server, please _GET_ me this resource", i.e., load this web page. Other verbs
+are used if we want to send some data from the user to the server, or modify or
+delete existing data. Below is a list of the available HTTP Verbs and what each
+is used for by convention. We will learn about them a bit later:
 
-Ronacher couldn't handle all of these requests himself, so he created [the
-Pallets Projects][pp] as a central location for Flask and his other projects.
-If you visit the homepage, you'll notice that the docs for Werkzeug, Jinja, and
-Click are available right there. This might be a useful page to bookmark, as
-most of the important documentation for Phase 4 is right there!
+| Verb | Description |
+| --- | --- |
+| GET | Retrieves a representation of a resource |
+| POST | Create a new resource using data in the body of the request |
+| PUT | Update an existing resource using data in the body of the request |
+| PATCH | Update part of an existing resource using data in the body of the request |
+| DELETE | Deletes a specific resource |
+| HEAD | Asks for a response (like a GET but without the body) |
+| TRACE | Echoes back the received request |
+| OPTIONS | Returns the HTTP methods the server supports |
+| CONNECT | Converts the request to a TCP/IP tunnel (generally for SSL) |
 
-Because it is useful for small and large projects and a wide variety of tasks,
-Flask is now the most used Python web framework: It is used at Netflix, Reddit,
-Airbnb, Lyft, Uber, and Mozilla, among many, many other companies. Flask isn't
-the perfect tool for every task, but we will explore several common use cases
-and introduce you to many generalizable key concepts in full-stack web
-development.
+### Request Format
+
+Our client so far has made a request to GitHub's server. In this case, a GET
+request to `/learn-co-curriculum/phase-3-how-the-web-works-readme`. The server
+then responds with all the code associated with that resource (everything
+between `<!doctype html>` and `</html>`), including all images, CSS files,
+JavaScript files, videos, music, etc.
+
+When the client makes a request, it includes additional "metadata" about the
+request, besides just the URL, in the **request headers**. The request headers
+contain all the information the server needs in order to fulfill the request:
+the HTTP verb (method), the resource (path), and the domain (authority), as well
+as some other metadata. The request headers look something like this:
+
+![request headers](https://curriculum-content.s3.amazonaws.com/python/request-headers.png
+"request headers")
 
 ***
 
-## What to Look Forward to in Phase 4
+## Responses
 
-In Phase 4, we will cover a number of topics in web development:
+Once a server receives the request, it will do some processing (when you write
+the servers, that means it'll run code you wrote!) and then send a response
+back. The server's response is separated into two sections: the **headers** and
+the **body**.
 
-- Core Components of Python Web Applications
-- Web Scraping
-- Application Programming Interfaces (APIs)
-- Retrieving Data from APIs
-- Building APIs with Flask
-- Restorative State Transfer (REST)
-- Forms and Validations
-- Client-Server Communication
-- Serialization
-- Full-Stack Development with Flask and React
-- Deploying a Web Application
+The server's **response headers** look something like this:
 
-Coming out of Phase 4, you will know how to build databases, Flask applications,
-and React frontends. This will give you all the tools you need to get started
-on your capstone project, as well as any other projects you might have in mind.
+![response headers](https://curriculum-content.s3.amazonaws.com/python/response-headers.png
+"response headers")
 
-Happy coding!
+The headers contain all of the metadata about the response. This includes things
+like `date` and what the `content-type` of the content is (is it HTML? JSON? an
+image?). The headers also include the **status code** of the response.
+
+The **body** of the response is what you see rendered on the page. It is all of
+that HTML/CSS that you see! Most of the data of a response is in the body, not
+in the headers.
+
+The body of the request can come in many different formats. For a website, the
+format will be HTML. For a web API, the format will probably be JSON (JavaScript
+Object Notation) or XML (eXtensible Markup Language), which are useful formats
+for transmitting structured data. In all cases, the **body** of the HTTP
+response is **just a string of text** — it's up to the client to use that string
+to build a graphical representation of the website, or parse the JSON response
+into another format.
+
+### Status Codes
+
+The primary way that a human user knows that a web request was successful is
+that the page loads without any errors. However, you can also tell a request was
+successful if you see that the response header's status code is `200`. You've
+probably seen another common status code, `404`. This means "resource not
+found."
+
+Status codes are separated into categories based on their first digit. Here are
+the different categories:
+
+- 100's - informational
+- 200's - success
+- 300's - redirect
+- 400's - client error
+- 500's - server error
+
+There are a number of other status codes and it's good to get familiar with
+them. You can see a full [list of status codes on Wikipedia][codes].
+
+## Conclusion
+
+As we shift our attention to back-end development during this phase and the
+next, one of your primary roles will be creating a server that can **handle a
+request** and **generate a response**. In this lesson, we explored the HTTP
+protocol and some of its key features, like:
+
+- URLs.
+- HTTP Verbs.
+- HTTP Status Codes.
+
+In the coming lessons, we'll see how to use Flask to help set upa server that
+lets us use these different features of HTTP in Python, as well as how the
+database comes into play when building our server.
 
 ## Resources
 
-- [Flask Documentation][flask]
-- [Armin Ronacher][armron]
-- [Werkzeug Documentation][werk]
-- [Jinja Documentation][jinja]
-- [Click Documentation][click]
-- [The Pallets Projects][pp]
+- [What is a URL? - Mozilla][url anatomy]
+- [HTTP Verbs (Methods) - Mozilla][verbs]
+- [List of HTTP Status Codes - Wikipedia][codes]
 
-[flask]: (https://flask.palletsprojects.com/en/2.2.x/)
-[armron]: (https://lucumr.pocoo.org/)
-[werk]: (https://palletsprojects.com/p/werkzeug/)
-[jinja]: (https://palletsprojects.com/p/jinja/)
-[click]: (https://palletsprojects.com/p/click/)
-[pp]: (https://palletsprojects.com/)
+[sir tim]: https://www.w3.org/People/Berners-Lee/
+[url anatomy]: https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL
+[verbs]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+[codes]: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
