@@ -254,6 +254,8 @@ the different categories:
 There are a number of other status codes and it's good to get familiar with
 them. You can see a full [list of status codes on Wikipedia][codes].
 
+***
+
 ## Conclusion
 
 As we shift our attention to back-end development during this phase and the
@@ -268,6 +270,8 @@ protocol and some of its key features, like:
 In the coming lessons, we'll see how to use Flask to help set upa server that
 lets us use these different features of HTTP in Python, as well as how the
 database comes into play when building our server.
+
+***
 
 ## Resources
 
