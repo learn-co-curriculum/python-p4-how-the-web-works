@@ -267,7 +267,7 @@ protocol and some of its key features, like:
 - HTTP Verbs.
 - HTTP Status Codes.
 
-In the coming lessons, we'll see how to use Flask to help set upa server that
+In the coming lessons, we'll see how to use Flask to help set up a server that
 lets us use these different features of HTTP in Python, as well as how the
 database comes into play when building our server.
 
